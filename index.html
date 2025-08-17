@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карьерный консультант | Александра Смирнова</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Общие стили */
+        :root {
+            --color-primary: #2F4858;
+            --color-secondary: #8BA8A9;
+            --color-accent: #F4A261;
+            --color-background: #F9FAFC;
+            --line-height-base: 1.6;
+            --line-height-heading: 1.2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            line-height: var(--line-height-base);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: var(--line-height-heading);
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section h2 {
+            margin-bottom: 60px;
+        }
+
+        .section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e08c4e;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        /* ИЗМЕНЕНО: Стили для hero-блока, чтобы он растягивался на всю ширину */
+        .hero {
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+            background-color: var(--color-primary);
+            width: 100%; /* Занимает всю ширину */
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about .container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .about-text p {
+            line-height: 1.7;
+        }
+
+        .about-image {
+            flex-shrink: 0;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Features Section */
+        .features .list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        /* ИЗМЕНЕНО: Добавлен отступ для второго заголовка */
+        .features-second-heading {
+            margin-top: 80px;
+        }
+
+        /* ИЗМЕНЕНО: Фон плашек изменен на --color-primary */
+        .features-help .feature-item {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        .features-help .feature-item h3,
+        .features-help .feature-item i {
+            color: white;
+        }
+
+        .feature-item {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item h3 {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .feature-item i {
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 10px;
+        }
+
+        .feature-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+
+        .feature-item:hover .overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .feature-item .overlay i {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .feature-item .overlay p {
+            font-size: 0.9rem;
+            padding: 0 15px;
+        }
+
+        /* How It Works Section */
+        .process .list {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+        }
+
+        .process-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            flex-basis: 30%;
+            position: relative;
+            background-color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .process-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .process-item h3 {
+            margin-bottom: 15px;
+        }
+
+        .process-item .icon {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .process-item:hover .icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .testimonials-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .testimonial-card .client-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 3px solid var(--color-accent);
+        }
+
+        .testimonial-card .client-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-card cite {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Pricing Section */
+        .pricing .list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.recommended {
+            border: 2px solid var(--color-accent);
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .pricing-card ul li {
+            padding: 8px 0;
+        }
+        .pricing-card ul li i {
+            color: var(--color-accent);
+            margin-right: 10px;
+        }
+
+        /* Contact Section */
+        .contact .container {
+            max-width: 600px;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact input {
+            padding: 15px;
+            border: 1px solid var(--color-secondary);
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+        }
+        .contact input:focus {
+            outline: 2px solid var(--color-accent);
+            border-color: transparent;
+        }
+
+        .contact .btn {
+            width: 100%;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        .footer .social-icons {
+            margin-top: 10px;
+        }
+
+        .footer .social-icons a {
+            color: white;
+            font-size: 24px;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .footer .social-icons a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .features .list, .testimonials-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+             .process .list {
+                flex-direction: column;
+                align-items: center;
+            }
+            .process-item {
+                width: 70%;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about .container,
+            .pricing .list {
+                flex-direction: column;
+                align-items: center;
+            }
+            .about-image {
+                width: 200px;
+                height: 200px;
+            }
+            .pricing-card {
+                width: 90%;
+                max-width: 350px;
+            }
+            .process-item {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+            .features .list, .testimonials-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ИЗМЕНЕНО: Структура hero-блока изменена для полноэкранного фона -->
+    <header class="hero section is-visible">
+        <div class="container">
+            <h1>Построй карьеру, о которой мечтаешь</h1>
+            <p>Я, Александра Смирнова, помогу тебе найти своё призвание, составить идеальное резюме и успешно пройти собеседование.</p>
+            <a href="#contact" class="btn">Записаться на консультацию</a>
+        </div>
+    </header>
+
+    <section class="about section">
+        <div class="container">
+            <div class="about-image">
+                <!-- ИЗМЕНЕНО: Добавлена новая фотография -->
+                <img src="https://images.pexels.com/photos/3764119/pexels-photo-3764119.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Александра Смирнова">
+            </div>
+            <div class="about-text">
+                <h2>Кто я и чем могу помочь?</h2>
+                <p>Здравствуйте! Меня зовут Александра Смирнова. Я — сертифицированный карьерный консультант с 10-летним опытом работы в HR. За это время я помогла более чем 500 специалистам найти работу своей мечты, повысить доход и обрести уверенность в своих силах. Моя миссия — помочь тебе раскрыть твой потенциал и построить по-настояшему счастливую карьеру.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features section">
+        <div class="container text-center">
+            <h2>Узнаёшь себя?</h2>
+            <div class="list">
+                <div class="feature-item">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>Не знаете, с чего начать?</h3>
+                    <div class="overlay">
+                        <i class="fas fa-search"></i>
+                        <p>Помогу определить первые шаги к карьере вашей мечты.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Устали от текущей работы?</h3>
+                    <div class="overlay">
+                        <i class="fas fa-arrow-up-right-dots"></i>
+                        <p>Вместе найдем новые карьерные возможности.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-comments"></i>
+                    <h3>Боитесь собеседований?</h3>
+                    <div class="overlay">
+                        <i class="fas fa-microphone"></i>
+                        <p>Подготовлю вас к успешному прохождению интервью.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Хотите расти, но не знаете куда?</h3>
+                    <div class="overlay">
+                        <i class="fas fa-rocket"></i>
+                        <p>Построим индивидуальный план карьерного роста.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Мечтаете о повышении зарплаты?</h3>
+                    <div class="overlay">
+                        <i class="fas fa-sack-dollar"></i>
+                        <p>Научу грамотно вести переговоры о зарплате.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Не можете найти работу после декрета?</h3>
+                    <div class="overlay">
+                        <i class="fas fa-baby-carriage"></i>
+                        <p>Помогу адаптироваться к рынку труда после долгого перерыва.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ИЗМЕНЕНО: Добавлен специальный класс для заголовка, чтобы задать ему отступ -->
+            <h2 class="features-second-heading">Я помогу тебе:</h2>
+            <div class="list features-help">
+                 <div class="feature-item">
+                    <i class="fas fa-user-check"></i>
+                    <h3>Найти свои сильные стороны</h3>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Составить цепляющее резюме</h3>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Подготовиться к собеседованию</h3>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-map-signs"></i>
+                    <h3>Разработать пошаговый план</h3>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-globe"></i>
+                    <h3>Найти работу за рубежом</h3>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-brain"></i>
+                    <h3>Развить гибкие навыки</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process section">
+        <div class="container text-center">
+            <h2>Как мы будем работать?</h2>
+            <div class="list">
+                <div class="process-item">
+                    <i class="fas fa-handshake icon"></i>
+                    <h3>Шаг 1: Знакомство</h3>
+                    <p>Мы познакомимся и проанализируем твою текущую ситуацию, цели и ожидания.</p>
+                </div>
+                <div class="process-item">
+                    <i class="fas fa-pen-nib icon"></i>
+                    <h3>Шаг 2: Стратегия</h3>
+                    <p>Мы составим персональный план, включающий шаги по поиску работы и развитию навыков.</p>
+                </div>
+                <div class="process-item">
+                    <i class="fas fa-road icon"></i>
+                    <h3>Шаг 3: Сопровождение</h3>
+                    <p>Я буду поддерживать тебя на каждом этапе: от редактирования резюме до финальной подготовки к собеседованию.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials section">
+        <div class="container text-center">
+            <h2>Что говорят клиенты?</h2>
+            <div class="testimonials-list">
+                <div class="testimonial-card">
+                    <div class="client-photo">
+                        <!-- ИЗМЕНЕНО: Добавлена фотография клиента -->
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Иван">
+                    </div>
+                    <p>"Благодаря Александре я смог найти работу в IT-компании, хотя раньше думал, что это невозможно! Она помогла мне поверить в себя."</p>
+                    <cite>— Иван, 28 лет</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="client-photo">
+                        <!-- ИЗМЕНЕНО: Добавлена фотография клиента -->
+                        <img src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Мария">
+                    </div>
+                    <p>"Я сменила скучную работу на ту, которая действительно приносит мне радость. Спасибо за профессионализм и поддержку!"</p>
+                    <cite>— Мария, 35 лет</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="client-photo">
+                        <!-- ИЗМЕНЕНО: Добавлена фотография клиента -->
+                        <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=200" alt="Анна">
+                    </div>
+                    <p>"Консультация превзошла все мои ожидания. Я не только получила оффер, но и научилась грамотно вести переговоры о зарплате."</p>
+                    <cite>— Анна, 31 год</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing section">
+        <div class="container text-center">
+            <h2>Выбери свой путь к успеху</h2>
+            <div class="list">
+                <div class="pricing-card">
+                    <h3>Базовый</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i>Анализ резюме</li>
+                        <li><i class="fas fa-check"></i>1 час консультации</li>
+                    </ul>
+                    <div class="price">5 000 руб.</div>
+                    <a href="#contact" class="btn">Выбрать</a>
+                </div>
+                <div class="pricing-card recommended">
+                    <h3>Оптимальный</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i>Анализ и доработка резюме</li>
+                        <li><i class="fas fa-check"></i>2 часа консультации</li>
+                        <li><i class="fas fa-check"></i>Подготовка к собеседованию</li>
+                        <li><i class="fas fa-check"></i>2 недели поддержки</li>
+                    </ul>
+                    <div class="price">12 000 руб.</div>
+                    <a href="#contact" class="btn">Выбрать</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Премиум</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i>Полный анализ карьерного пути</li>
+                        <li><i class="fas fa-check"></i>Индивидуальные консультации (5 часов)</li>
+                        <li><i class="fas fa-check"></i>Составление сопроводительных писем</li>
+                        <li><i class="fas fa-check"></i>Подготовка к собеседованиям</li>
+                        <li><i class="fas fa-check"></i>Сопровождение до оффера</li>
+                    </ul>
+                    <div class="price">25 000 руб.</div>
+                    <a href="#contact" class="btn">Выбрать</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact section">
+        <div class="container text-center">
+            <h2>Сделай первый шаг к своей цели</h2>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="phone" placeholder="Телефон" required>
+                <button type="submit" class="btn">Отправить заявку</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Email: info@career-consult.ru | Телефон: +7 (XXX) XXX-XX-XX</p>
+            <div class="social-icons">
+                <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JS для анимации появления блоков при скролле
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
