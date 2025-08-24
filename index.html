@@ -432,8 +432,41 @@
                 width: 90%;
                 margin-bottom: 20px;
             }
+            /* Стили для горизонтального слайдера на мобильных устройствах */
             .features .list, .testimonials-list {
-                grid-template-columns: 1fr;
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch; /* Для плавного скролла на iOS */
+                gap: 20px; /* Уменьшаем зазор между элементами */
+                padding-bottom: 15px; /* Отступ для индикатора прокрутки */
+            }
+
+            .features .list::-webkit-scrollbar,
+            .testimonials-list::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .features .list::-webkit-scrollbar-thumb,
+            .testimonials-list::-webkit-scrollbar-thumb {
+                background-color: var(--color-accent);
+                border-radius: 10px;
+            }
+
+            .features .list::-webkit-scrollbar-track,
+            .testimonials-list::-webkit-scrollbar-track {
+                background-color: rgba(0,0,0,0.1);
+                border-radius: 10px;
+            }
+
+            .feature-item, .testimonial-card {
+                flex: 0 0 80%; /* Элементы занимают 80% ширины контейнера */
+                scroll-snap-align: start;
+                margin-right: 10px; /* Дополнительный отступ между элементами */
+            }
+
+            .feature-item:last-child, .testimonial-card:last-child {
+                margin-right: 0;
             }
         }
     </style>
@@ -646,9 +679,12 @@
         <div class="container text-center">
             <h2>Сделай первый шаг к своей цели</h2>
             <form action="#" method="post">
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="tel" name="phone" placeholder="Телефон" required>
+                <label for="name" class="sr-only">Ваше имя</label>
+                <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <label for="phone" class="sr-only">Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="Телефон" required>
                 <button type="submit" class="btn">Отправить заявку</button>
             </form>
         </div>
@@ -658,9 +694,9 @@
         <div class="container">
             <p>Email: info@career-consult.ru | Телефон: +7 (XXX) XXX-XX-XX</p>
             <div class="social-icons">
-                <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Telegram" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram"></i></a>
+                <a href="#" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </footer>
